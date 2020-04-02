@@ -31,9 +31,8 @@
           <h3>COMMENTS</h3>
         </mat-card-title>
         <mat-card-content>
-         <p *ngFor="let Dish of dish.comments">{{Dish.comment}} <br>  {{Dish.rating}} Star<br> --{{Dish.author}} &nbsp;{{Dish.date | date}} </p>
+         <p *ngFor="let comment of dish.comments">{{comment.comment}} <br>  {{comment.rating}} Star<br> --{{comment.author}} &nbsp;{{comment.date}} </p>
         </mat-card-content>
   	</mat-card>
   </div>
-
 </div>
