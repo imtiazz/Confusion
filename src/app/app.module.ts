@@ -6,6 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatToolbarModule } from '@angular/material/toolbar'; 
 import { FlexLayoutModule } from '@angular/flex-layout';
+import { MatDialogModule } from '@angular/material/dialog';
 
 import 'hammerjs';
 import { MenuComponent } from './menu/menu.component';
@@ -23,6 +24,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AppRoutingModule } from './app-routing/app-routing.module';
 import {PromotionService} from './services/promotion.service';
 import {LeaderService} from './services/leader.service';
+import { LoginComponent } from './login/login.component';
 
 @NgModule({
   declarations: [
@@ -33,7 +35,8 @@ import {LeaderService} from './services/leader.service';
     FooterComponent,
     AboutComponent,
     HomeComponent,
-    ContactComponent
+    ContactComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -44,11 +47,14 @@ import {LeaderService} from './services/leader.service';
     MatGridListModule,
     MatCardModule,
     MatButtonModule,
-    AppRoutingModule
-
+    AppRoutingModule,
+    MatDialogModule
   ],
   providers: [DishService],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  entryComponents: [
+    LoginComponent
+  ]
  
 })
 export class AppModule { }
