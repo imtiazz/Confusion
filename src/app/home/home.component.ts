@@ -24,8 +24,11 @@ export class HomeComponent implements OnInit {
     private featuredLeaderService: FeaturedLeaderService ) { }
 
   ngOnInit() {
-    this.dish = this.dishservice.getFeaturedDish();
-    this.promotion = this.promotionservice.getFeaturedPromotion();
+
+    //this.dish = this.dishservice.getFeaturedDish();
+    this.dishservice.getFeaturedDish().then(dish => this.dish=dish)
+    // this.promotion = this.promotionservice.getFeaturedPromotion();
+    this.promotionservice.getFeaturedPromotion().then(promotion => this.promotion=promotion);
     this.featuredLeader=this.featuredLeaderService.getFeaturedLeader();
   }
 }
