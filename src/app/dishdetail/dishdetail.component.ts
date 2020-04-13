@@ -10,6 +10,7 @@ import {Comment} from '../shared/comment';
 //import {DISHES} from '../shared/dishes';
 
 
+
 @Component({
   selector: 'app-dishdetail',
   templateUrl: './dishdetail.component.html',
@@ -27,6 +28,7 @@ export class DishdetailComponent implements OnInit {
   prev: string;
   next: string;
   dishErrMess:string;
+  dishcopy: Dish;
   
   constructor(private dishservice: DishService,
   private route: ActivatedRoute,
@@ -45,7 +47,7 @@ export class DishdetailComponent implements OnInit {
     // this.dishservice.getDish(id).subscribe(dish => this.dish=dish);
     this.dishservice.getDishIds().subscribe(dishIds => this.dishIds = dishIds,errmess => this.dishErrMess = <any>errmess);
     this.route.params.pipe(switchMap((params: Params) => this.dishservice.getDish(params['id'])))
-    .subscribe(dish => { this.dish = dish; this.setPrevNext(dish.id); },errmess => this.dishErrMess = <any>errmess);
+    .subscribe(dish => { this.dish = dish; this.dishcopy = dish; this.setPrevNext(dish.id); },errmess => this.dishErrMess = <any>errmess);
     
   }
 
@@ -114,6 +116,11 @@ export class DishdetailComponent implements OnInit {
     this.comment = this.commentForm.value;
     this.comment.date = new Date().toISOString();
     this.dish.comments.push(this.comment);
+    this.dishservice.putDish(this.dishcopy)
+            .subscribe(dish => {
+              this.dish = dish; this.dishcopy = dish;
+            },
+            errmess => { this.dish = null; this.dishcopy = null; this.dishErrMess = <any>errmess; });
     
     //this.pushToArray([this.commentForm.value.author,this.commentForm.value.rating,this.commentForm.value.comment], DISHES)
     console.log(this.comment);
