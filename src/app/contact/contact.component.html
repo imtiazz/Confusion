@@ -37,8 +37,18 @@
   </div>
 
   <!-- <Feedback Form> -->
+    <div fxFlex *ngIf="submittedFeedback != null" [@expand]>
+        <h3>Your Submission</h3>
+        <p>First Name: {{submittedFeedback.firstname}}</p>
+        <p>Last Name: {{submittedFeedback.lastname}}</p>
+        <p>Tel: {{submittedFeedback.telnum}}</p>
+        <p>Email: {{submittedFeedback.email}}</p>
+        <p>Contact You?: {{submittedFeedback.agree}}</p>
+        <p>How?: {{submittedFeedback.contacttype}}</p>
+        <p>Feedback: {{submittedFeedback.message}}</p>
+      </div>
 
-  <div fxFlex fxFlexOffset="20px" class="form-size">
+  <div fxFlex fxFlexOffset="20px" class="form-size" *ngIf="!formSubmitted && submittedFeedback==null">
     <h3>Send us your Feedback</h3>
     <p>{{ feedbackForm.value | json }} {{ feedbackForm.status | json }}</p>
 
@@ -86,5 +96,22 @@
       </p>
       <button type="submit" mat-button class="background-primary text-floral-white">Submit</button>
     </form>
+    <!-- <div [hidden]="!formSubmitted">
+      <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+    </div> -->
   </div>
+  <!-- <div [hidden]="Feedback">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div> -->
+  <div fxFlex [hidden]="!formSubmitted">
+    <h3>Submitting Form</h3>
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+  </div>
+  <div fxFlex [hidden]="feedback == null || errMess == null">
+    <mat-spinner></mat-spinner><h4>Loading . . . Please Wait</h4>
+    </div>
+  <div fxFlex *ngIf="feedbackErrMess">
+    <h2>Error</h2>
+    <h4>{{errMess}}</h4>
+    </div>
 </div>

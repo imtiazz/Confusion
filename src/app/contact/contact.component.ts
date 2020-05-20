@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Feedback, ContactType } from '../shared/feedback';
 import { flyInOut } from '../animations/app.animation';
+import {FeedbackService} from '../services/feedback.service';
 
 
 
@@ -23,9 +24,13 @@ export class ContactComponent implements OnInit {
   @ViewChild('fform') feedbackFormDirective;
   feedbackForm: FormGroup;
   feedback: Feedback;
+  submittedFeedback:Feedback
   contactType = ContactType;
+  feedbackCopy: Feedback;
+  feedbackErrMess:string;
+  formSubmitted:boolean=false;
 
-  constructor(private fb: FormBuilder) { 
+  constructor(private fb: FormBuilder, private feedbackService:FeedbackService) { 
     this.createForm();
   }
 
@@ -98,8 +103,38 @@ export class ContactComponent implements OnInit {
 
 
   onSubmit() {
+    this.formSubmitted=true;
     this.feedback = this.feedbackForm.value;
+    //this.feedbackCopy=this.feedbackForm.value;
+        //this.feedback.push(this.feedbackForm.value);
+    this.feedbackService.postFeedback(this.feedback)
+    .subscribe(feedback => {
+    this.submittedFeedback=feedback;
+    this.feedback=feedback;
+    setTimeout(()=>{this.submittedFeedback=null},5000)
+    },
+      errmess => { this.feedback = null; this.feedbackErrMess = <any>errmess})
+
     console.log(this.feedback);
+
+   // this.feedbackForm.
+   if (this.feedback != null) {
+    this.submittedFeedback = this.feedback;
+    this.formSubmitted = false;
+    setTimeout(() => {
+      this.submittedFeedback= null;
+      this.feedbackForm.reset({
+        firstname: '',
+        lastname: '',
+        telnum: '',
+        email: '',
+        agree: false,
+        contacttype: 'None',
+        message: ''
+      });
+    }, 5000);
+  } else {
+    this.formSubmitted = false;
     this.feedbackForm.reset({
       firstname: '',
       lastname: '',
@@ -111,5 +146,6 @@ export class ContactComponent implements OnInit {
     });
     this.feedbackFormDirective.resetForm();
   }
+}
 
 }

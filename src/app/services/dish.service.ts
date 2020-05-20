@@ -26,7 +26,7 @@ export class DishService {
   // });
   // return of(DISHES).pipe(delay(2000));
   return this.http.get<Dish[]>(baseURL + 'dishes')
-  .pipe(catchError(this.processHTTPMsgService.handleError));;
+  .pipe(catchError(this.processHTTPMsgService.handleError));
 
   }
 
@@ -39,7 +39,7 @@ export class DishService {
     // });
     //return of(DISHES.filter((dish) => (dish.id === id))[0]).pipe(delay(2000));
     return this.http.get<Dish>(baseURL + 'dishes/' + id)
-    .pipe(catchError(this.processHTTPMsgService.handleError));;
+    .pipe(catchError(this.processHTTPMsgService.handleError));
   }
 
    getFeaturedDish(): Observable<Dish> {
@@ -50,7 +50,7 @@ export class DishService {
       // });
      //return of(DISHES.filter((dish) => dish.featured)[0]).pipe(delay(2000));
      return this.http.get<Dish[]>(baseURL + 'dishes?featured=true').pipe(map(dishes => dishes[0]))
-     .pipe(catchError(this.processHTTPMsgService.handleError));;
+     .pipe(catchError(this.processHTTPMsgService.handleError));
      //return this.http.get<Dish[]>(baseURL + 'dishes?featured=true').[]
   }
    
